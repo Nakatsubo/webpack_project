@@ -126,9 +126,9 @@ module.exports = {
 ### For development
 
 ```bash
-$ npm run start
-// or
 $ npx webpack serve
+// or
+// $ npm run start
 ```
 
 ## Watch for differences Project
@@ -230,4 +230,53 @@ $ npm install @babel/polyfill
 
 ```javascript
 import "@babel/polyfill";
+```
+
+## Command setting
+
+### package.json
+
+```javascript
+{
+  "version": "1.0.0",
+  "scripts": {
+    "build": "NODE_ENV=production webpack --mode production",
+    "dev": "NODE_ENV=development webpack --mode development",
+    "start:dev": "npx webpack serve --mode development",
+    "watch": "webpack --watch"
+  },
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
+```
+
+### Build command
+
+```bash
+// for hotReload
+$ npm run start:dev
+
+// for development
+$ npm run dev
+
+// for production
+$ npm run build
+```
+
+## CSS Project
+CSSをmain.jsに一元化する過程でペンディング。
+https://www.webdesignleaves.com/pr/jquery/webpack_basic_01.html
+
+```bash
+$ npm i -D style-loader css-loader
 ```

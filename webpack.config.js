@@ -1,18 +1,29 @@
+const path = require('path');  //path モジュールの読み込み
+
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
-  mode: "development",
   devtool: "source-map",
-  mode: "production",
+  mode: "development",
+  // mode: "production",
 
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: `./src/assets/js/index.js`,
 
   module: {
     rules: [
+      //CSS 用のローダー
+      { 
+        //拡張子 .css や .CSS を対象
+        test: /\.css$/i,  
+        //使用するローダーを指定
+        use: ['style-loader', 'css-loader']
+      },
       {
         // 拡張子 .js の場合
         test: /\.js$/,
+        // ローダーの処理対象から外すディレクトリ
+        exclude: /node_modules/,
         use: [
           {
             // Babel を利用する
@@ -34,9 +45,10 @@ module.exports = {
   // ファイルの出力設定
   output: {
     //  出力ファイルのディレクトリ名
-    path: `${__dirname}/dist/assets/js/`,
+    path: path.resolve(__dirname, 'dist/assets/js'),
     // 出力ファイル名
-    filename: "main.js"
+    filename: "main.js",
+    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
   },
 
   // ローカル開発用環境を立ち上げる
