@@ -3,7 +3,8 @@ p {
   background-color: yellow;
 }
 div {
-  background-image: url("../img/sample.jpg");
+  /* パスを変更 */
+  background-image: url("./assets/img/sample.jpg");
   background-size: cover;
   padding: 30px;
   max-width: 640px;

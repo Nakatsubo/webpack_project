@@ -31,6 +31,8 @@ module.exports = {
             loader: "css-loader",
             // ソースマップを有効にする
             options: {
+              // CSS 内の画像URL指定の解決を無効にする
+              url: false, // true or false
               sourceMap: false // true or false
             }
           }
