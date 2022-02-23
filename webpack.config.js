@@ -1,4 +1,4 @@
-const path = require('path');  //path モジュールの読み込み
+const path = require("path");  //path モジュールの読み込み
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
@@ -20,7 +20,7 @@ module.exports = {
     rules: [
       {
         // CSS & SASS 用のローダー
-        test: /\.(scss|sass|css)$/i,  //拡張子 .scss、.sass、css を対象
+        test: /\.(scss|sass|css)$/i,  // 拡張子 .scss、.sass、css を対象
         //使用するローダーを指定
         use: [
           "style-loader", // CSS を出力するローダー
@@ -69,13 +69,6 @@ module.exports = {
           }
         ],
       },
-      // 画像用のモジュール
-      {
-        // 対象のアセットファイルの拡張子を指定
-        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-        // type を指定
-        type: "asset"
-      },
       // Bable のローダー
       {
         // 拡張子 .js の場合
@@ -96,14 +89,28 @@ module.exports = {
           },
         ],
       },
+      // 画像用のモジュール
+      // {
+      //   // 対象のアセットファイルの拡張子を指定
+      //   test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+      //   // type を指定
+      //   type: "asset"
+      // },
+      // Asset Modules の設定
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i, // 対象とするアセットファイルの拡張子
+        type: 'asset/resource'  // asset/resource を指定して画像をコピーして出力
+      },
     ],
   },
   target: ["web", "es5"],
 
   // ファイルの出力設定
   output: {
-    //  出力ファイルのディレクトリ名
-    path: path.resolve(__dirname, 'dist/assets/js'),
+    // 出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, "dist/assets/js"),
+    // Asset Modules の出力先を指定 -> ~/assets/js/~ 以下に出力される
+    assetModuleFilename: 'assets/img/[name][ext][query]',
     // 出力ファイル名
     filename: "main.js",
     clean: true //ファイルを出力する前にディレクトリをクリーンアップ
