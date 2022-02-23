@@ -47,6 +47,12 @@ module.exports = {
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: `./src/assets/js/index.js`,
 
+  // ファイルの監視設定
+  // watch: true,  // watch オプションを有効にする -> ここで指定しなくてもよい
+  watchOptions: {
+    ignored: ['node_modules/**']  // 'files/**/*.js' -> 配列とワイルドカードで指定
+  },
+
   // ファイルの出力設定
   output: {
     //  出力ファイルのディレクトリ名
@@ -105,6 +111,8 @@ devMiddleware: {
 ```
 
 ```javascript
+// const path = require('path');  //path モジュールの読み込み
+
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
@@ -112,6 +120,12 @@ module.exports = {
 
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: `./src/assets/js/index.js`,
+
+  // ファイルの監視設定
+  // watch: true,  // watch オプションを有効にする -> ここで指定しなくてもよい
+  watchOptions: {
+    ignored: ['node_modules/**']  // 'files/**/*.js' -> 配列とワイルドカードで指定
+  },
 
   // ファイルの出力設定
   output: {
@@ -170,6 +184,7 @@ $ npx webpack --watch
 ```
 
 ## Babel
+ローダーを使用してファイルをモジュール化しバンドルする
 
 ```bash
 $ npm install -D babel-loader @babel/core @babel/preset-env
@@ -178,20 +193,36 @@ $ npm install -D babel-loader @babel/core @babel/preset-env
 ### webpack.config.js
 
 ```javascript
+// const path = require('path');  //path モジュールの読み込み
+
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
   mode: "development",
   devtool: "source-map",
 
+  // production モード で圧縮しない場合
+  // optimization: {
+  //   minimize: false
+  // },
+
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: `./src/assets/js/index.js`,
 
+  // ファイルの監視設定
+  // watch: true,  // watch オプションを有効にする -> ここで指定しなくてもよい
+  watchOptions: {
+    ignored: ['node_modules/**']  // 'files/**/*.js' -> 配列とワイルドカードで指定
+  },
+
+  // モジュールの設定
   module: {
     rules: [
       {
         // 拡張子 .js の場合
         test: /\.js$/,
+        // 処理対象から外すディレクトリ
+        exclude: /node_modules/,
         use: [
           {
             // Babel を利用する
@@ -239,7 +270,8 @@ $ npm install @babel/polyfill
 ```
 
 ### index.js
-@babel/polyfill をインポートする
+~~@babel/polyfill をインポートする~~
+この設定は不要
 
 ```javascript
 import "@babel/polyfill";

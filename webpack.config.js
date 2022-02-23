@@ -10,6 +10,13 @@ module.exports = {
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: `./src/assets/js/index.js`,
 
+  // ファイルの監視設定
+  // watch: true,
+  watchOptions: {
+    ignored: ['node_modules/**']
+  },
+
+
   module: {
     rules: [
       //CSS 用のローダー
