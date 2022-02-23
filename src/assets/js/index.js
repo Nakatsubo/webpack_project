@@ -1,5 +1,6 @@
 // import "@babel/polyfill";
-import  '../css/style.css';  // import 文を使って style.css を読み込む（追加）
+// import  '../css/style.css'; // import 文を使って style.css を読み込む
+import  '../scss/style.scss'; // import 文を使って style.scss を読み込む（追加）
 
 // import 文を使って foo.js の関数 greet1 をインポート
 import { greet1 } from './modules/foo.js';

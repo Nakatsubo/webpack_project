@@ -18,25 +18,31 @@ module.exports = {
 
   module: {
     rules: [
-      // CSS のローダー
-      { 
-        //拡張子 .css や .CSS を対象
-        test: /\.css$/i,  
-        //　使用するローダーを指定
+      {
+        //CSS & SASS 用のローダー
+        test: /\.(scss|sass|css)$/i,  //拡張子 .scss、.sass、css を対象
+        //使用するローダーを指定
         use: [
-          // CSS を出力するローダー
-          "style-loader",
-          { 
-            // CSS を変換するローダー
-            loader: "css-loader",
-            // ソースマップを有効にする
+          'style-loader', // CSS を出力するローダー
+          {    
+            loader: 'css-loader', // CSS を JavaScript に変換するローダー
             options: {
-              // CSS 内の画像URL指定の解決を無効にする
-              url: false, // true or false
-              sourceMap: false // true or false
+              // ソースマップを有効に      
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader', // Sass をコンパイルするローダー
+            options: {
+              // ソースマップを有効に
+              sourceMap: true,
+              // アウトプットスタイルの指定
+              sassOptions: {  
+                outputStyle: 'compressed',
+              },
             }
           }
-        ]
+        ],
       },
       // 画像用のモジュール
       {

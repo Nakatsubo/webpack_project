@@ -1,0 +1,8 @@
+/* Sass 変数で色と背景色を定義 */ 
+$color: blue;
+$bg_color: pink;
+ 
+p {
+  color: $color;
+  background-color: $bg_color;
+}

@@ -11,6 +11,7 @@
 1. [Command setting](https://github.com/NakatsuboYusuke/webpack_project#command-setting)
 1. [CSS Project](https://github.com/NakatsuboYusuke/webpack_project#css-project)
 1. [Image Project](https://github.com/NakatsuboYusuke/webpack_project#image-project)
+1. [Sass]()
 
 
 ## Create Project
@@ -229,7 +230,7 @@ $ npx webpack --watch
 ```
 
 ## Babel
-ローダーを使用してファイルをモジュール化しバンドルする
+ローダーを使用してJavascriptファイルをモジュール化しバンドルする
 
 ```bash
 $ npm install -D babel-loader @babel/core @babel/preset-env
@@ -930,4 +931,324 @@ div {
 │       │       └── foo.js
 │       └── scss
 └── webpack.config.js
+```
+
+## Sass
+ローダーを使用してSassファイルをモジュール化しバンドルする
+
+### Install sass-loader sass
+
+```bash
+$ npm install -D sass-loader sass
+```
+
+#### package.json
+
+```javascript
+{
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "start:dev": "npx webpack serve --mode development",
+    "watch": "webpack --watch"
+  },
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "sass": "^1.49.8",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
+```
+
+#### webpack.cofig.js
+
+```javascript
+// ...
+
+  module: {
+    rules: [
+      // ...
+      {
+        // CSS & SASS 用のローダー
+        test: /\.(scss|sass|css)$/i, // 拡張子 .scss、.sass、css を対象
+        // 使用するローダーを指定
+        use: [
+          // CSS を出力するローダー
+          'style-loader',
+          // CSS を JavaScript に変換するローダー
+          'css-loader',
+          // Sass をコンパイルするローダー
+          'sass-loader',
+        ],
+      },
+```
+
+```javascript
+const path = require('path');  //path モジュールの読み込み
+
+module.exports = {
+  // モード値を production に設定すると最適化された状態で、
+  // development に設定するとソースマップ有効でJSファイルが出力される
+  devtool: "source-map",
+  mode: "development",
+  // mode: "production",
+
+  // メインとなるJavaScriptファイル（エントリーポイント）
+  entry: `./src/assets/js/index.js`,
+
+  // ファイルの監視設定
+  // watch: true,
+  watchOptions: {
+    ignored: ["node_modules/**"]
+  },
+
+  module: {
+    rules: [
+      // // CSS のローダー
+      // { 
+      //   //拡張子 .css や .CSS を対象
+      //   test: /\.css$/i,  
+      //   //　使用するローダーを指定
+      //   use: [
+      //     // CSS を出力するローダー
+      //     "style-loader",
+      //     { 
+      //       // CSS を変換するローダー
+      //       loader: "css-loader",
+      //       // ソースマップを有効にする
+      //       options: {
+      //         // CSS 内の画像URL指定の解決を無効にする
+      //         url: false, // true or false
+      //         sourceMap: false // true or false
+      //       }
+      //     }
+      //   ]
+      // },
+      {
+        // CSS & SASS 用のローダー
+        test: /\.(scss|sass|css)$/i, // 拡張子 .scss、.sass、css を対象
+        // 使用するローダーを指定
+        use: [
+          // CSS を出力するローダー
+          'style-loader',
+          // CSS を JavaScript に変換するローダー
+          'css-loader',
+          // Sass をコンパイルするローダー
+          'sass-loader',
+        ],
+      },
+      // 画像用のモジュール
+      {
+        // 対象のアセットファイルの拡張子を指定
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        // type を指定
+        type: 'asset'
+      },
+      // Bable のローダー
+      {
+        // 拡張子 .js の場合
+        test: /\.js$/,
+        // ローダーの処理対象から外すディレクトリ
+        exclude: /node_modules/,
+        use: [
+          {
+            // Babel を利用する
+            loader: "babel-loader",
+            // Babel のオプションを指定する
+            options: {
+              presets: [
+                // プリセットを指定することで、ES2021 を ES5 に変換
+                "@babel/preset-env",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  target: ["web", "es5"],
+
+  // ファイルの出力設定
+  output: {
+    //  出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
+    // 出力ファイル名
+    filename: "main.js",
+    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
+  },
+
+  // ローカル開発用環境を立ち上げる
+  // 実行時にブラウザが自動的に localhost を開く
+  devServer: {
+    static: "dist",
+    open: true,
+    devMiddleware: {
+      writeToDisk: true, //バンドルされたファイルを出力する（実際に書き出す）
+    },
+  },
+  
+};
+```
+
+### Extending setting
+Sassのソースマップを有効、アウトプットスタイルを圧縮
+
+#### webpack.cofig.js
+
+```javascript
+// ...
+
+  module: {
+    rules: [
+      {
+        //CSS & SASS 用のローダー
+        test: /\.(scss|sass|css)$/i,  //拡張子 .scss、.sass、css を対象
+        //使用するローダーを指定
+        use: [
+          'style-loader', // CSS を出力するローダー
+          {    
+            loader: 'css-loader', // CSS を JavaScript に変換するローダー
+            options: {
+              // ソースマップを有効に      
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader', // Sass をコンパイルするローダー
+            options: {
+              // ソースマップを有効に
+              sourceMap: true,
+              // アウトプットスタイルの指定
+              sassOptions: {  
+                outputStyle: 'compressed',
+              },
+            }
+          }
+        ],
+      },
+
+```
+
+```javascript
+const path = require('path');  //path モジュールの読み込み
+
+module.exports = {
+  // モード値を production に設定すると最適化された状態で、
+  // development に設定するとソースマップ有効でJSファイルが出力される
+  devtool: "source-map",
+  mode: "development",
+  // mode: "production",
+
+  // メインとなるJavaScriptファイル（エントリーポイント）
+  entry: `./src/assets/js/index.js`,
+
+  // ファイルの監視設定
+  // watch: true,
+  watchOptions: {
+    ignored: ["node_modules/**"]
+  },
+
+  module: {
+    rules: [
+      {
+        //CSS & SASS 用のローダー
+        test: /\.(scss|sass|css)$/i,  //拡張子 .scss、.sass、css を対象
+        //使用するローダーを指定
+        use: [
+          'style-loader', // CSS を出力するローダー
+          {    
+            loader: 'css-loader', // CSS を JavaScript に変換するローダー
+            options: {
+              // ソースマップを有効に      
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader', // Sass をコンパイルするローダー
+            options: {
+              // ソースマップを有効に
+              sourceMap: true,
+              // アウトプットスタイルの指定
+              sassOptions: {  
+                outputStyle: 'compressed',
+              },
+            }
+          }
+        ],
+      },
+      // 画像用のモジュール
+      {
+        // 対象のアセットファイルの拡張子を指定
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        // type を指定
+        type: 'asset'
+      },
+      // Bable のローダー
+      {
+        // 拡張子 .js の場合
+        test: /\.js$/,
+        // ローダーの処理対象から外すディレクトリ
+        exclude: /node_modules/,
+        use: [
+          {
+            // Babel を利用する
+            loader: "babel-loader",
+            // Babel のオプションを指定する
+            options: {
+              presets: [
+                // プリセットを指定することで、ES2021 を ES5 に変換
+                "@babel/preset-env",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  target: ["web", "es5"],
+
+  // ファイルの出力設定
+  output: {
+    //  出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
+    // 出力ファイル名
+    filename: "main.js",
+    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
+  },
+
+  // ローカル開発用環境を立ち上げる
+  // 実行時にブラウザが自動的に localhost を開く
+  devServer: {
+    static: "dist",
+    open: true,
+    devMiddleware: {
+      writeToDisk: true, //バンドルされたファイルを出力する（実際に書き出す）
+    },
+  },
+  
+};
+```
+
+#### style.scss
+
+```scss
+/* Sass 変数で色と背景色を定義 */ 
+$color: blue;
+$bg_color: pink;
+ 
+p {
+  color: $color;
+  background-color: $bg_color;
+}
 ```
