@@ -907,7 +907,6 @@ div {
 
 ```bash
 .
-├── README.md
 ├── dist
 │   ├── assets
 │   │   ├── img
@@ -1255,7 +1254,6 @@ p {
 
 ```bash
 .
-├── README.md
 ├── dist
 │   ├── assets
 │   │   ├── img
