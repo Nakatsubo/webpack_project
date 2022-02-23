@@ -10,6 +10,16 @@ $ npm init -y
 $ npm i -D webpack webpack-cli
 ```
 
+### Watch Install Packages
+
+```bash
+// 第一階層まで表示
+$ npm ls -depth=0
+
+// 第二階層まで表示
+$ npm ls -depth=1
+```
+
 ### package.json
 
 ```javascript
