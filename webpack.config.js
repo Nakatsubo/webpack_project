@@ -13,20 +13,31 @@ module.exports = {
   // ファイルの監視設定
   // watch: true,
   watchOptions: {
-    ignored: ['node_modules/**']
+    ignored: ["node_modules/**"]
   },
 
 
   module: {
     rules: [
-      // CSS 用のローダー
+      // CSS のローダー
       { 
         //拡張子 .css や .CSS を対象
         test: /\.css$/i,  
-        //使用するローダーを指定
-        use: ['style-loader', 'css-loader']
+        //　使用するローダーを指定
+        use: [
+          // CSS を出力するローダー
+          "style-loader",
+          { 
+            // CSS を変換するローダー
+            loader: "css-loader",
+            // ソースマップを有効にする
+            options: {
+              sourceMap: false // true or false
+            }
+          }
+        ]
       },
-      // Bable 用のローダー
+      // Bable のローダー
       {
         // 拡張子 .js の場合
         test: /\.js$/,
