@@ -315,6 +315,28 @@ $ NODE_ENV=development npx webpack
 $ NODE_ENV=production npx webpack
 ```
 
+```bash
+.
+├── dist
+│   ├── assets
+│   │   └── js
+│   │       ├── main.js
+│   │       └── main.js.map
+│   └── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   └── assets
+│       ├── js
+│       │   ├── index.js
+│       │   └── modules
+│       │       ├── bar.js
+│       │       └── foo.js
+│       └── scss
+└── webpack.config.js
+```
+
 ### Build command
 
 ```bash
@@ -329,6 +351,7 @@ $ npm run build
 ```
 
 ## CSS Project
+cssをJavascript内にビルドする
 
 ### CSS in Javascript
 
@@ -383,20 +406,31 @@ module.exports = {
   // ファイルの監視設定
   // watch: true,
   watchOptions: {
-    ignored: ['node_modules/**']
+    ignored: ["node_modules/**"]
   },
 
 
   module: {
     rules: [
-      // CSS 用のローダー
+      // CSS のローダー
       { 
         //拡張子 .css や .CSS を対象
         test: /\.css$/i,  
-        //使用するローダーを指定
-        use: ['style-loader', 'css-loader']
+        //　使用するローダーを指定
+        use: [
+          // CSS を出力するローダー
+          "style-loader",
+          { 
+            // CSS を変換するローダー
+            loader: "css-loader",
+            // ソースマップを有効にする
+            options: {
+              sourceMap: false // true or false
+            }
+          }
+        ]
       },
-      // Bable 用のローダー
+      // Bable のローダー
       {
         // 拡張子 .js の場合
         test: /\.js$/,
@@ -442,9 +476,185 @@ module.exports = {
 };
 ```
 
+```bash
+.
+├── dist
+│   ├── assets
+│   │   └── js
+│   │       ├── main.js
+│   │       └── main.js.map
+│   └── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   └── assets
+│       ├── css
+│       │   └── style.css
+│       ├── img
+│       │   └── sample.jpg
+│       ├── js
+│       │   ├── index.js
+│       │   └── modules
+│       │       ├── bar.js
+│       │       └── foo.js
+│       └── scss
+└── webpack.config.js
+```
+
 #### index.js
 
 ```javascript
 // ...
 import  '../css/style.css';  // import 文を使って style.css を読み込む
+```
+
+#### style.css
+
+```css
+p {
+  color: green;
+  background-color: yellow;
+}
+```
+
+## Image Project
+画像をJavascriptで書き出す
+
+### css image in Javascript
+
+#### webpack.cofig.js
+
+```javascript
+const path = require('path');  //path モジュールの読み込み
+
+module.exports = {
+  // モード値を production に設定すると最適化された状態で、
+  // development に設定するとソースマップ有効でJSファイルが出力される
+  devtool: "source-map",
+  mode: "development",
+  // mode: "production",
+
+  // メインとなるJavaScriptファイル（エントリーポイント）
+  entry: `./src/assets/js/index.js`,
+
+  // ファイルの監視設定
+  // watch: true,
+  watchOptions: {
+    ignored: ["node_modules/**"]
+  },
+
+  module: {
+    rules: [
+      // CSS のローダー
+      { 
+        //拡張子 .css や .CSS を対象
+        test: /\.css$/i,  
+        //　使用するローダーを指定
+        use: [
+          // CSS を出力するローダー
+          "style-loader",
+          { 
+            // CSS を変換するローダー
+            loader: "css-loader",
+            // ソースマップを有効にする
+            options: {
+              sourceMap: false // true or false
+            }
+          }
+        ]
+      },
+      // 画像用のモジュール
+      {
+        // 対象のアセットファイルの拡張子を指定
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        // type を指定
+        type: 'asset'
+      },
+      // Bable のローダー
+      {
+        // 拡張子 .js の場合
+        test: /\.js$/,
+        // ローダーの処理対象から外すディレクトリ
+        exclude: /node_modules/,
+        use: [
+          {
+            // Babel を利用する
+            loader: "babel-loader",
+            // Babel のオプションを指定する
+            options: {
+              presets: [
+                // プリセットを指定することで、ES2021 を ES5 に変換
+                "@babel/preset-env",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  target: ["web", "es5"],
+
+  // ファイルの出力設定
+  output: {
+    //  出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
+    // 出力ファイル名
+    filename: "main.js",
+    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
+  },
+
+  // ローカル開発用環境を立ち上げる
+  // 実行時にブラウザが自動的に localhost を開く
+  devServer: {
+    static: "dist",
+    open: true,
+    devMiddleware: {
+      writeToDisk: true, //バンドルされたファイルを出力する（実際に書き出す）
+    },
+  },
+  
+};
+```
+
+#### style.css
+
+```css
+p {
+  color: green;
+  background-color: yellow;
+}
+div {
+  background-image: url("../img/sample.jpg");
+  background-size: cover;
+  padding: 30px;
+  max-width: 640px;
+}
+```
+
+```bash
+.
+├── dist
+│   ├── assets
+│   │   └── js
+│   │       ├── 717ad58b3ff5fb2e9889.jpg
+│   │       ├── main.js
+│   │       └── main.js.map
+│   └── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   └── assets
+│       ├── css
+│       │   └── style.css
+│       ├── img
+│       │   └── sample.jpg
+│       ├── js
+│       │   ├── index.js
+│       │   └── modules
+│       │       ├── bar.js
+│       │       └── foo.js
+│       └── scss
+└── webpack.config.js
 ```

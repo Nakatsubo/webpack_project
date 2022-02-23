@@ -2,3 +2,9 @@ p {
   color: green;
   background-color: yellow;
 }
+div {
+  background-image: url("../img/sample.jpg");
+  background-size: cover;
+  padding: 30px;
+  max-width: 640px;
+}

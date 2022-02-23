@@ -16,7 +16,6 @@ module.exports = {
     ignored: ["node_modules/**"]
   },
 
-
   module: {
     rules: [
       // CSS のローダー
@@ -36,6 +35,13 @@ module.exports = {
             }
           }
         ]
+      },
+      // 画像用のモジュール
+      {
+        // 対象のアセットファイルの拡張子を指定
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        // type を指定
+        type: 'asset'
       },
       // Bable のローダー
       {
