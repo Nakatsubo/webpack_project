@@ -14,6 +14,7 @@
 1. [Sass](https://github.com/NakatsuboYusuke/webpack_project#sass)
 1. [Asset Modules](https://github.com/NakatsuboYusuke/webpack_project#asset-modules)
 1. [Plugins](https://github.com/NakatsuboYusuke/webpack_project#plugins)
+1. [splitChunks](splitChunks)
 
 ## Create Project
 
@@ -2616,4 +2617,45 @@ module.exports = {
   },
   
 };
+```
+
+```bash
+.
+├── dist
+│   ├── assets
+│   │   ├── css
+│   │   │   ├── style.css
+│   │   │   └── style.css.map
+│   │   ├── img
+│   │   │   └── sample.jpg
+│   │   └── js
+│   │       ├── main.js
+│   │       ├── main.js.map
+│   │       ├── one.js
+│   │       ├── one.js.map
+│   │       ├── two.js
+│   │       ├── two.js.map
+│   │       ├── vendor.js
+│   │       ├── vendor.js.LICENSE.txt
+│   │       └── vendor.js.map
+│   └── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   └── assets
+│       ├── img
+│       │   └── sample.jpg
+│       ├── js
+│       │   ├── index.js
+│       │   ├── modules
+│       │   │   ├── bar.js
+│       │   │   └── foo.js
+│       │   ├── one.js
+│       │   └── two.js
+│       └── scss
+│           ├── modules
+│           │   └── mixin.scss
+│           └── style.scss
+└── webpack.config.js
 ```
