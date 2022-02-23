@@ -2,56 +2,78 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/assets/js/index.js":
-/*!********************************!*\
-  !*** ./src/assets/js/index.js ***!
-  \********************************/
+/***/ "./src/assets/js/modules/bar.js":
+/*!**************************************!*\
+  !*** ./src/assets/js/modules/bar.js ***!
+  \**************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/style.scss */ "./src/assets/scss/style.scss");
-// import  '../css/style.css'; // import 文を使って style.css を読み込む
- // import 文を使って style.scss を読み込む
-// // import 文を使って foo.js の関数 greet1 をインポート
-// import { greet1 } from './modules/foo.js';
-// // import 文を使って bar.js の関数 greet2 をインポート
-// import { greet2 } from './modules/bar.js';
-// function component() {
-//   //div 要素を生成
-//   const divElem = document.createElement('div');
-//   //p 要素を生成
-//   const p1 = document.createElement('p');
-//   //インポートした greet1 の実行結果を p 要素のテキストに
-//   p1.textContent = greet1();
-//   //div 要素に上記 p 要素を追加
-//   divElem.appendChild(p1);
-//   const p2 = document.createElement('p');
-//   p2.textContent = greet2();
-//   divElem.appendChild(p2);
-//   return divElem;
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "heading": function() { return /* binding */ heading; }
+/* harmony export */ });
+// // export 文を使って関数 greet2 を定義
+// export function greet2() {
+//   return 'Hello from Bar.';
 // }
-// document.body.appendChild(component());
-
-console.log('Hello, World');
+// export 文を使って文字列を返す関数 heading を定義
+var heading = function heading() {
+  return 'This is the heading text by bar.js!';
+};
 
 /***/ }),
 
-/***/ "./src/assets/scss/style.scss":
-/*!************************************!*\
-  !*** ./src/assets/scss/style.scss ***!
-  \************************************/
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/assets/js/modules/foo.js":
+/*!**************************************!*\
+  !*** ./src/assets/js/modules/foo.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "content": function() { return /* binding */ content; }
+/* harmony export */ });
+// // export 文を使って関数 greet1 を定義
+// export function greet1() {
+//   return 'Hello from Foo.';
+// }
+// export 文を使って文字列を関数 content を定義
+var content = function content() {
+  return 'This is the content text by foo.js!';
+};
 
-    if(true) {
-      // 1645628474864
-      var cssReload = __webpack_require__(/*! ../../../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"locals":false});
-      module.hot.dispose(cssReload);
-      module.hot.accept(undefined, cssReload);
-    }
-  
+/***/ }),
+
+/***/ "./src/assets/js/one.js":
+/*!******************************!*\
+  !*** ./src/assets/js/one.js ***!
+  \******************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _modules_foo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/foo.js */ "./src/assets/js/modules/foo.js");
+/* harmony import */ var _modules_bar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/bar.js */ "./src/assets/js/modules/bar.js");
+//jquery をインポート（読み込んで $ として使用）
+ //foo.js をインポート
+
+ //bar.js をインポート
+
+
+
+var component = function component() {
+  //div 要素を生成
+  var element = document.createElement('div'); // インポートした関数の実行結果を使って div 要素の HTML を作成
+
+  element.innerHTML = "<h1>ONE: ".concat((0,_modules_bar_js__WEBPACK_IMPORTED_MODULE_2__.heading)(), "</h1>\n<p>").concat((0,_modules_foo_js__WEBPACK_IMPORTED_MODULE_1__.content)(), "</p>");
+  return element;
+}; // jQuery を使って body 要素に component() の実行結果を設定
+
+
+jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').html(component()); // jQuery を使って body 要素の色を緑色に変更
+
+jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').css('color', 'green');
 
 /***/ })
 
@@ -70,7 +92,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
+/******/ 			// no module.id needed
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
@@ -178,7 +200,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /******/ 	/* webpack/runtime/get update manifest filename */
 /******/ 	!function() {
-/******/ 		__webpack_require__.hmrF = function() { return "main." + __webpack_require__.h() + ".hot-update.json"; };
+/******/ 		__webpack_require__.hmrF = function() { return "one." + __webpack_require__.h() + ".hot-update.json"; };
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
@@ -754,7 +776,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = __webpack_require__.hmrS_jsonp = __webpack_require__.hmrS_jsonp || {
-/******/ 			"main": 0
+/******/ 			"one": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -1295,9 +1317,9 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// Load entry module and return exports
 /******/ 	__webpack_require__.O(undefined, ["vendor"], function() { return __webpack_require__("./node_modules/webpack-dev-server/client/index.js?protocol=ws%3A&hostname=0.0.0.0&port=8080&pathname=%2Fws&logging=info&reconnect=10"); })
 /******/ 	__webpack_require__.O(undefined, ["vendor"], function() { return __webpack_require__("./node_modules/webpack/hot/dev-server.js"); })
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendor"], function() { return __webpack_require__("./src/assets/js/index.js"); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendor"], function() { return __webpack_require__("./src/assets/js/one.js"); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=one.js.map

@@ -16,6 +16,8 @@ module.exports = {
   entry: {
     main: "./src/assets/js/index.js",
     // test: "./src/assets/js/test.js",
+    one: "./src/assets/js/one.js",
+    two: "./src/assets/js/two.js",
   },
 
   // ファイルの監視設定
@@ -150,11 +152,22 @@ module.exports = {
     assetModuleFilename: "assets/img/[name][ext][query]",
     
     // 出力ファイル名
-    filename: "assets/js/main.js",
+    filename: "assets/js/[name].js",
     //ファイルを出力する前にディレクトリをクリーンアップ
     clean: {
       keep: /index.html/, // index.html をキープ（削除しない）
     } 
+  },
+
+  //optimization の設定を追加
+  optimization: {
+    //optimization.splitChunks の設定
+    splitChunks: {
+      // 分離されて生成される chunk の名前（任意の名前）
+      name: 'vendor',
+      // 対象とするチャンク（chunk）に含めるモジュールの種類
+      chunks: 'initial',   // または 'all'
+    }
   },
 
   // ローカル開発用環境を立ち上げる
