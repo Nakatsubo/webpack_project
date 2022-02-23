@@ -19,13 +19,14 @@ module.exports = {
 
   module: {
     rules: [
-      //CSS 用のローダー
+      // CSS 用のローダー
       { 
         //拡張子 .css や .CSS を対象
         test: /\.css$/i,  
         //使用するローダーを指定
         use: ['style-loader', 'css-loader']
       },
+      // Bable 用のローダー
       {
         // 拡張子 .js の場合
         test: /\.js$/,

@@ -20,7 +20,7 @@ $ npm ls -depth=0
 $ npm ls -depth=1
 ```
 
-### package.json
+#### package.json
 
 ```javascript
 {
@@ -36,7 +36,7 @@ $ npm ls -depth=1
 }
 ```
 
-### webpack.config.js
+#### webpack.config.js
 
 ```javascript
 module.exports = {
@@ -81,7 +81,7 @@ $ npx webpack
 $ npm i -D webpack-dev-server
 ```
 
-### package.json
+#### package.json
 
 ```javascript
 {
@@ -99,7 +99,7 @@ $ npm i -D webpack-dev-server
 }
 ```
 
-### webpack.config.js
+#### webpack.config.js
 ~~下記のコードを記載しないとバンドルされたファイルが出力されない~~
 ~~tmpファイルが毎回生成されてしまうが、解決策がわからないので一旦残す~~
 ファイルを出力するごとにクリーンアップする
@@ -160,7 +160,7 @@ $ npx webpack serve
 
 ## Watch for differences Project
 
-### package.json
+#### package.json
 
 ```javascript
 {
@@ -190,7 +190,7 @@ $ npx webpack --watch
 $ npm install -D babel-loader @babel/core @babel/preset-env
 ```
 
-### webpack.config.js
+#### webpack.config.js
 
 ```javascript
 // const path = require('path');  //path モジュールの読み込み
@@ -271,7 +271,7 @@ $ npm install @babel/polyfill
 
 ### index.js
 ~~@babel/polyfill をインポートする~~
-この設定は不要
+この設定は不要かも...
 
 ```javascript
 import "@babel/polyfill";
@@ -279,7 +279,7 @@ import "@babel/polyfill";
 
 ## Command setting
 
-### package.json
+#### package.json
 
 ```javascript
 {
@@ -329,9 +329,122 @@ $ npm run build
 ```
 
 ## CSS Project
-CSSをmain.jsに一元化する過程でペンディング。
-https://www.webdesignleaves.com/pr/jquery/webpack_basic_01.html
+
+### CSS in Javascript
+
+### Install style-loader css-loader 
 
 ```bash
 $ npm i -D style-loader css-loader
+```
+
+#### package.json
+
+```javascript
+{
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "start:dev": "npx webpack serve --mode development",
+    "watch": "webpack --watch"
+  },
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
+```
+
+#### webpack.config.js
+
+```javascript
+const path = require('path');  //path モジュールの読み込み
+
+module.exports = {
+  // モード値を production に設定すると最適化された状態で、
+  // development に設定するとソースマップ有効でJSファイルが出力される
+  devtool: "source-map",
+  mode: "development",
+  // mode: "production",
+
+  // メインとなるJavaScriptファイル（エントリーポイント）
+  entry: `./src/assets/js/index.js`,
+
+  // ファイルの監視設定
+  // watch: true,
+  watchOptions: {
+    ignored: ['node_modules/**']
+  },
+
+
+  module: {
+    rules: [
+      // CSS 用のローダー
+      { 
+        //拡張子 .css や .CSS を対象
+        test: /\.css$/i,  
+        //使用するローダーを指定
+        use: ['style-loader', 'css-loader']
+      },
+      // Bable 用のローダー
+      {
+        // 拡張子 .js の場合
+        test: /\.js$/,
+        // ローダーの処理対象から外すディレクトリ
+        exclude: /node_modules/,
+        use: [
+          {
+            // Babel を利用する
+            loader: "babel-loader",
+            // Babel のオプションを指定する
+            options: {
+              presets: [
+                // プリセットを指定することで、ES2021 を ES5 に変換
+                "@babel/preset-env",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  target: ["web", "es5"],
+
+  // ファイルの出力設定
+  output: {
+    //  出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
+    // 出力ファイル名
+    filename: "main.js",
+    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
+  },
+
+  // ローカル開発用環境を立ち上げる
+  // 実行時にブラウザが自動的に localhost を開く
+  devServer: {
+    static: "dist",
+    open: true,
+    devMiddleware: {
+      writeToDisk: true, //バンドルされたファイルを出力する（実際に書き出す）
+    },
+  },
+  
+};
+```
+
+#### index.js
+
+```javascript
+// ...
+import  '../css/style.css';  // import 文を使って style.css を読み込む
 ```
