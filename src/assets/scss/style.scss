@@ -1,8 +1,10 @@
-$color: #5CD1F1;
-$bg_color: #FAD4D4;
- 
+@import 'modules/mixin.scss';
+
 div {
   background-color: $bg_color;
+  background-image: url("../img/sample.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 600px;
   height: 400px;
 }

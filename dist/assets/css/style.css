@@ -1,2 +1,6 @@
-div{background-color:#fad4d4;height:400px;width:600px}p{color:#5cd1f1}
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/assets/scss/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+div{background-color:#fad4d4;background-image:url(../../assets/img/sample.jpg);background-repeat:no-repeat;background-size:cover;width:600px;height:400px}p{color:#5cd1f1}
+
 /*# sourceMappingURL=style.css.map*/

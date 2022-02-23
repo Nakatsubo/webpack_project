@@ -13,10 +13,10 @@ module.exports = {
   // mode: "production",
 
   // メインとなるJavaScriptファイル（エントリーポイント）
-  entry: [
-    // './src/assets/css/style.css',
-    './src/assets/js/index.js',
-  ],
+  entry: {
+    main: "./src/assets/js/index.js",
+    // test: "./src/assets/js/test.js",
+  },
 
   // ファイルの監視設定
   // watch: true,
@@ -27,7 +27,7 @@ module.exports = {
   // プラグインの設定
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'assets/css/style.css',  // 出力先とファイル名を指定
+      filename: "assets/css/style.css",  // 出力先とファイル名を指定
     }),
   ],
 
@@ -127,15 +127,15 @@ module.exports = {
       // Asset Modules の設定
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i, // 対象とするアセットファイルの拡張子
-        type: 'asset/resource'  // asset/resource を指定して画像をコピーして出力
+        type: "asset/resource"  // asset/resource を指定して画像をコピーして出力
       },
       // フォント
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i, //対象とするフォントファイルの拡張子
-        type: 'asset/resource', // フォントをコピーして出力 
+        type: "asset/resource", // フォントをコピーして出力 
         generator: {
           //出力先を指定（fonts フォルダにファイル名と拡張子で出力）
-          filename: 'fonts/[name][ext][query]'
+          filename: "assets/fonts/[name][ext][query]"
         }
       },
     ],
