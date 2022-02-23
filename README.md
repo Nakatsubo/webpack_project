@@ -273,6 +273,16 @@ import "@babel/polyfill";
 }
 ```
 
+## Enviroment Valiables
+
+```bash
+// webpack を実行時に NODE_ENV に development を渡す場合
+$ NODE_ENV=development npx webpack
+ 
+// webpack を実行時に NODE_ENV に production を渡す場合
+$ NODE_ENV=production npx webpack
+```
+
 ### Build command
 
 ```bash
