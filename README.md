@@ -3,6 +3,11 @@
 - [最新版で学ぶwebpack 5入門 Babel 7でES2021環境の構築](https://ics.media/entry/16028/#webpack-babel-esnext)
 - [webpack の基本的な使い方](https://www.webdesignleaves.com/pr/jquery/webpack_basic_01.html)
 
+## Index
+1. [Create Project](https://github.com/NakatsuboYusuke/webpack_project#create-project)
+1. [Watch Project](https://github.com/NakatsuboYusuke/webpack_project#watch-project)
+1. []()
+
 ## Create Project
 
 ```bash
@@ -99,6 +104,19 @@ $ npm i -D webpack-dev-server
 }
 ```
 
+### Path setting
+
+```javascript
+const path = require('path');  //path モジュールの読み込み
+
+// ...
+
+  // ファイルの出力設定
+  output: {
+    // 出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
+```
+
 #### webpack.config.js
 ~~下記のコードを記載しないとバンドルされたファイルが出力されない~~
 
@@ -107,12 +125,13 @@ $ npm i -D webpack-dev-server
 ファイルを出力するごとにクリーンアップする
 
 ```javascript
+const path = require('path');  //path モジュールの読み込み
 // ...
 
-// ファイルの出力設定
+  // ファイルの出力設定
   output: {
-    //  出力ファイルのディレクトリ名
-    path: `${__dirname}/dist/assets/js/`,
+    // 出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
     // 出力ファイル名
     filename: "main.js",
     clean: true //ファイルを出力する前にディレクトリをクリーンアップ
@@ -132,7 +151,7 @@ $ npm i -D webpack-dev-server
 ```
 
 ```javascript
-// const path = require('path');  //path モジュールの読み込み
+const path = require('path');  //path モジュールの読み込み
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
@@ -150,8 +169,8 @@ module.exports = {
 
   // ファイルの出力設定
   output: {
-    //  出力ファイルのディレクトリ名
-    path: `${__dirname}/dist/assets/js/`,
+    // 出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
     // 出力ファイル名
     filename: "main.js",
     clean: true //ファイルを出力する前にディレクトリをクリーンアップ
@@ -296,10 +315,11 @@ module.exports = {
 
   // ファイルの出力設定
   output: {
-    //  出力ファイルのディレクトリ名
-    path: `${__dirname}/dist/assets/js/`,
+    // 出力ファイルのディレクトリ名
+    path: path.resolve(__dirname, 'dist/assets/js'),
     // 出力ファイル名
-    filename: "main.js"
+    filename: "main.js",
+    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
   },
 
   // ローカル開発用環境を立ち上げる
