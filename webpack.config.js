@@ -1,7 +1,9 @@
 // path モジュールの読み込み
 const path = require("path");
-// require() を使って MiniCssExtractPlugin の読み込み
+// MiniCssExtractPlugin モジュールの読み込み
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// CssMinimizerPlugin モジュールの読み込み
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
@@ -12,7 +14,7 @@ module.exports = {
 
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: [
-    './src/assets/css/style.css',
+    // './src/assets/css/style.css',
     './src/assets/js/index.js',
   ],
 
@@ -28,6 +30,17 @@ module.exports = {
       filename: 'assets/css/style.css',  // 出力先とファイル名を指定
     }),
   ],
+
+  //圧縮（minify）の設定
+  optimization: {
+    //minimize: true, // true or false -> モードに関わらず常に圧縮を有効にする場合は指定
+    minimizer: [
+      `...`,  // JavaScript の圧縮を有効に（デフォルトの圧縮の設定を適用）
+      new CssMinimizerPlugin({
+        parallel: true, // ビルド速度を向上
+      }),
+    ],
+  },
 
   module: {
     rules: [

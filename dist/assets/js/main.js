@@ -1,2 +1,2 @@
-!function(){"use strict";var e,t;e=document.createElement("div"),(t=document.createElement("p")).textContent="Hello! This is sample text.",e.appendChild(t),document.body.appendChild(e)}();
+!function(){"use strict";var e=document.createElement("div"),t=document.createElement("p");t.textContent="Hello! This is sample text.",e.appendChild(t),document.body.appendChild(e)}();
 //# sourceMappingURL=main.js.map
