@@ -12,7 +12,7 @@
 1. [CSS Project](https://github.com/NakatsuboYusuke/webpack_project#css-project)
 1. [Image Project](https://github.com/NakatsuboYusuke/webpack_project#image-project)
 1. [Sass](https://github.com/NakatsuboYusuke/webpack_project#sass)
-1. [Asset Modules]()
+1. [Asset Modules](https://github.com/NakatsuboYusuke/webpack_project#asset-modules)
 
 ## Create Project
 
@@ -1510,6 +1510,38 @@ module.exports = {
 画像などのアセットファイルをコピーしてビルドディレクトリに出力する
 
 -> 想定したディレクトリに出力されない -> ペンディング
+
+```bash
+.
+├── dist
+│   ├── assets
+│   │   ├── img
+│   │   │   └── sample.jpg
+│   │   └── js
+│   │       ├── assets // -> ここにディレクトリが生成されてしまう
+│   │       │   └── img
+│   │       │       └── sample.jpg
+│   │       ├── main.js
+│   │       └── main.js.map
+│   └── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   └── assets
+│       ├── css
+│       │   └── style.css
+│       ├── img
+│       │   └── sample.jpg
+│       ├── js
+│       │   ├── index.js
+│       │   └── modules
+│       │       ├── bar.js
+│       │       └── foo.js
+│       └── scss
+│           └── style.scss
+└── webpack.config.js
+```
 
 #### webpack.config.js
 
