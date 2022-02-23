@@ -772,3 +772,31 @@ div {
   max-width: 640px;
 }
 ```
+
+```bash
+.
+├── README.md
+├── dist
+│   ├── assets
+│   │   ├── img
+│   │   │   └── sample.jpg
+│   │   └── js
+│   │       ├── main.js
+│   │       └── main.js.map
+│   └── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   └── assets
+│       ├── css
+│       │   └── style.css
+│       ├── img
+│       ├── js
+│       │   ├── index.js
+│       │   └── modules
+│       │       ├── bar.js
+│       │       └── foo.js
+│       └── scss
+└── webpack.config.js
+```
