@@ -19,26 +19,51 @@ module.exports = {
   module: {
     rules: [
       {
-        //CSS & SASS 用のローダー
+        // CSS & SASS 用のローダー
         test: /\.(scss|sass|css)$/i,  //拡張子 .scss、.sass、css を対象
         //使用するローダーを指定
         use: [
-          'style-loader', // CSS を出力するローダー
+          "style-loader", // CSS を出力するローダー
           {    
-            loader: 'css-loader', // CSS を JavaScript に変換するローダー
+            loader: "css-loader", // CSS を JavaScript に変換するローダー
             options: {
+               // postcss-loader と sass-loader の場合は2を指定
+               importLoaders: 2, 
+               // 0 => no loaders (default);
+               // 1 => postcss-loader;
+               // 2 => postcss-loader, sass-loader
               // ソースマップを有効に      
               sourceMap: true,
             },
           },
+          // PostCSS の設定
           {
-            loader: 'sass-loader', // Sass をコンパイルするローダー
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      // 必要に応じてオプションを指定
+                      // stage: 0,
+                      // browsers: 'last 2 versions',
+                      // autoprefixer のオプション
+                      // autoprefixer: { grid: true }
+                    },
+                  ],
+                ],
+              },
+            },
+          },
+          {
+            loader: "sass-loader", // Sass をコンパイルするローダー
             options: {
               // ソースマップを有効に
               sourceMap: true,
               // アウトプットスタイルの指定
               sassOptions: {  
-                outputStyle: 'compressed',
+                outputStyle: "compressed",
               },
             }
           }
@@ -49,7 +74,7 @@ module.exports = {
         // 対象のアセットファイルの拡張子を指定
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
         // type を指定
-        type: 'asset'
+        type: "asset"
       },
       // Bable のローダー
       {

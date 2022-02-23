@@ -638,7 +638,7 @@ p {
         // 対象のアセットファイルの拡張子を指定
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
         // type を指定
-        type: 'asset'
+        type: "asset"
       },
 ```
 
@@ -686,7 +686,7 @@ module.exports = {
         // 対象のアセットファイルの拡張子を指定
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
         // type を指定
-        type: 'asset'
+        type: "asset"
       },
       // Bable のローダー
       {
@@ -841,7 +841,7 @@ module.exports = {
         // 対象のアセットファイルの拡張子を指定
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
         // type を指定
-        type: 'asset'
+        type: "asset"
       },
       // Bable のローダー
       {
@@ -984,11 +984,11 @@ $ npm install -D sass-loader sass
         // 使用するローダーを指定
         use: [
           // CSS を出力するローダー
-          'style-loader',
+          "style-loader",
           // CSS を JavaScript に変換するローダー
-          'css-loader',
+          "css-loader",
           // Sass をコンパイルするローダー
-          'sass-loader',
+          "sass-loader",
         ],
       },
 ```
@@ -1040,11 +1040,11 @@ module.exports = {
         // 使用するローダーを指定
         use: [
           // CSS を出力するローダー
-          'style-loader',
+          "style-loader",
           // CSS を JavaScript に変換するローダー
-          'css-loader',
+          "css-loader",
           // Sass をコンパイルするローダー
-          'sass-loader',
+          "sass-loader",
         ],
       },
       // 画像用のモジュール
@@ -1115,22 +1115,22 @@ Sassのソースマップを有効、アウトプットスタイルを圧縮
         test: /\.(scss|sass|css)$/i,  //拡張子 .scss、.sass、css を対象
         //使用するローダーを指定
         use: [
-          'style-loader', // CSS を出力するローダー
+          "style-loader", // CSS を出力するローダー
           {    
-            loader: 'css-loader', // CSS を JavaScript に変換するローダー
+            loader: "css-loader", // CSS を JavaScript に変換するローダー
             options: {
               // ソースマップを有効に      
               sourceMap: true,
             },
           },
           {
-            loader: 'sass-loader', // Sass をコンパイルするローダー
+            loader: "sass-loader", // Sass をコンパイルするローダー
             options: {
               // ソースマップを有効に
               sourceMap: true,
               // アウトプットスタイルの指定
               sassOptions: {  
-                outputStyle: 'compressed',
+                outputStyle: "compressed",
               },
             }
           }
@@ -1161,26 +1161,26 @@ module.exports = {
   module: {
     rules: [
       {
-        //CSS & SASS 用のローダー
+        // CSS & SASS 用のローダー
         test: /\.(scss|sass|css)$/i,  //拡張子 .scss、.sass、css を対象
         //使用するローダーを指定
         use: [
-          'style-loader', // CSS を出力するローダー
+          "style-loader", // CSS を出力するローダー
           {    
-            loader: 'css-loader', // CSS を JavaScript に変換するローダー
+            loader: "css-loader", // CSS を JavaScript に変換するローダー
             options: {
               // ソースマップを有効に      
               sourceMap: true,
             },
           },
           {
-            loader: 'sass-loader', // Sass をコンパイルするローダー
+            loader: "sass-loader", // Sass をコンパイルするローダー
             options: {
               // ソースマップを有効に
               sourceMap: true,
               // アウトプットスタイルの指定
               sassOptions: {  
-                outputStyle: 'compressed',
+                outputStyle: "compressed",
               },
             }
           }
@@ -1191,7 +1191,7 @@ module.exports = {
         // 対象のアセットファイルの拡張子を指定
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
         // type を指定
-        type: 'asset'
+        type: "asset"
       },
       // Bable のローダー
       {
@@ -1279,3 +1279,43 @@ p {
 │           └── style.scss
 └── webpack.config.js
 ```
+
+### Install postcss-loader postcss postcss-preset-env
+>PostCSS Preset Env は CSS の新しい仕様を後方互換性を持って変換したり、CSS プロパティに自動でベンダープレフィックスを付与することができるプラグインです。
+
+```bash
+$ npm install -D postcss-loader postcss postcss-preset-env
+```
+
+#### webpack.config.js
+
+```javascript
+{
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "start:dev": "npx webpack serve --mode development",
+    "watch": "webpack --watch"
+  },
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "postcss": "^8.4.6",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.4.1",
+    "sass": "^1.49.8",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
+```
+
