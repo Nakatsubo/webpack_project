@@ -1,0 +1,1 @@
+{"version":3,"file":"style.css","mappings":";;;AAGA,IACE,wBAHS,CAIT,YACA,aAEF,EACE,aATM,C","sources":["webpack:///./src/assets/scss/style.scss"],"sourcesContent":["$color: #5CD1F1;\n$bg_color: #FAD4D4;\n \ndiv {\n  background-color: $bg_color;\n  width: 600px;\n  height: 400px;\n}\np {\n  color:  $color;\n}"],"names":[],"sourceRoot":""}

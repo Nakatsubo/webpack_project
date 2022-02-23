@@ -1,8 +1,11 @@
-/* Sass 変数で色と背景色を定義 */ 
-$color: blue;
-$bg_color: pink;
+$color: #5CD1F1;
+$bg_color: #FAD4D4;
  
-p {
-  color: $color;
+div {
   background-color: $bg_color;
+  width: 600px;
+  height: 400px;
+}
+p {
+  color:  $color;
 }

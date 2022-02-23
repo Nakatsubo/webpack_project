@@ -1,4 +1,7 @@
-const path = require("path");  //path モジュールの読み込み
+// path モジュールの読み込み
+const path = require("path");
+// require() を使って MiniCssExtractPlugin の読み込み
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
@@ -16,6 +19,13 @@ module.exports = {
     ignored: ["node_modules/**"]
   },
 
+  // プラグインの設定
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'style.css',  //ファイル名を指定
+    }),
+  ],
+
   module: {
     rules: [
       {
@@ -23,7 +33,9 @@ module.exports = {
         test: /\.(scss|sass|css)$/i,  // 拡張子 .scss、.sass、css を対象
         //使用するローダーを指定
         use: [
-          "style-loader", // CSS を出力するローダー
+          // "style-loader", // CSS を出力するローダー　-> 削除
+          // CSSファイルを抽出するように MiniCssExtractPlugin のローダーを指定
+          MiniCssExtractPlugin.loader,
           {    
             loader: "css-loader", // CSS を JavaScript に変換するローダー
             options: {
@@ -47,7 +59,7 @@ module.exports = {
                     {
                       // 必要に応じてオプションを指定
                       // stage: 0,
-                      // browsers: 'last 2 versions',
+                      // browsers: "last 2 versions",
                       // autoprefixer のオプション
                       // autoprefixer: { grid: true }
                     },
@@ -90,16 +102,16 @@ module.exports = {
         ],
       },
       // 画像用のモジュール
-      // {
-      //   // 対象のアセットファイルの拡張子を指定
-      //   test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-      //   // type を指定
-      //   type: "asset"
-      // },
+      {
+        // 対象のアセットファイルの拡張子を指定
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        // type を指定
+        type: "asset"
+      },
       // Asset Modules の設定
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i, // 対象とするアセットファイルの拡張子
-        type: 'asset/resource'  // asset/resource を指定して画像をコピーして出力
+        type: "asset/resource"  // asset/resource を指定して画像をコピーして出力
       },
     ],
   },
@@ -108,12 +120,15 @@ module.exports = {
   // ファイルの出力設定
   output: {
     // 出力ファイルのディレクトリ名
-    path: path.resolve(__dirname, "dist/assets/js"),
-    // Asset Modules の出力先を指定 -> ~/assets/js/~ 以下に出力される
-    assetModuleFilename: 'assets/img/[name][ext][query]',
+    path: path.resolve(__dirname, "dist"),
+    // Asset Modules の出力先を指定 -> ↑で出力ファイルのディレクトリ名を指定しているため /assets/js/　以下に出力される
+    assetModuleFilename: "assets/img/[name][ext][query]",
     // 出力ファイル名
-    filename: "main.js",
-    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
+    filename: "assets/js/main.js",
+    //ファイルを出力する前にディレクトリをクリーンアップ
+    clean: {
+      keep: /index.html/, // index.html をキープ（削除しない）
+    } 
   },
 
   // ローカル開発用環境を立ち上げる

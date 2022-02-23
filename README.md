@@ -13,6 +13,7 @@
 1. [Image Project](https://github.com/NakatsuboYusuke/webpack_project#image-project)
 1. [Sass](https://github.com/NakatsuboYusuke/webpack_project#sass)
 1. [Asset Modules](https://github.com/NakatsuboYusuke/webpack_project#asset-modules)
+1. [Plugins]()
 
 ## Create Project
 
@@ -128,7 +129,15 @@ const path = require("path");  // path モジュールの読み込み
 
 ~~tmpファイルが毎回生成されてしまうが、解決策がわからないので一旦残す~~
 
-ファイルを出力するごとにクリーンアップする
+ファイルを出力するごとにクリーンアップする/index.htmlは除く
+
+```javascript
+//ファイルを出力する前にディレクトリをクリーンアップ
+clean: {
+  keep: /index.html/, // index.html をキープ（削除しない）
+  } 
+},
+```
 
 ```javascript
 const path = require("path"); // path モジュールの読み込み
@@ -140,7 +149,10 @@ const path = require("path"); // path モジュールの読み込み
     path: path.resolve(__dirname, "dist/assets/js"),
     // 出力ファイル名
     filename: "main.js",
-    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
+    //ファイルを出力する前にディレクトリをクリーンアップ
+    clean: {
+      keep: /index.html/, // index.html をキープ（削除しない）
+    } 
   },
 
   // ローカル開発用環境を立ち上げる
@@ -455,7 +467,6 @@ $ npm i -D style-loader css-loader
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.6.0",
-    "mini-css-extract-plugin": "^2.5.3",
     "style-loader": "^3.3.1",
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
@@ -959,7 +970,6 @@ $ npm install -D sass-loader sass
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.6.0",
-    "mini-css-extract-plugin": "^2.5.3",
     "sass": "^1.49.8",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
@@ -1307,7 +1317,6 @@ $ npm install -D postcss-loader postcss postcss-preset-env
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.6.0",
-    "mini-css-extract-plugin": "^2.5.3",
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",
     "postcss-preset-env": "^7.4.1",
@@ -1509,40 +1518,6 @@ module.exports = {
 ## Asset Modules
 画像などのアセットファイルをコピーしてビルドディレクトリに出力する
 
--> 想定したディレクトリに出力されない -> ペンディング
-
-```bash
-.
-├── dist
-│   ├── assets
-│   │   ├── img
-│   │   │   └── sample.jpg
-│   │   └── js
-│   │       ├── assets // -> ここにディレクトリが生成されてしまう
-│   │       │   └── img
-│   │       │       └── sample.jpg
-│   │       ├── main.js
-│   │       └── main.js.map
-│   └── index.html
-├── node_modules
-├── package-lock.json
-├── package.json
-├── src
-│   └── assets
-│       ├── css
-│       │   └── style.css
-│       ├── img
-│       │   └── sample.jpg
-│       ├── js
-│       │   ├── index.js
-│       │   └── modules
-│       │       ├── bar.js
-│       │       └── foo.js
-│       └── scss
-│           └── style.scss
-└── webpack.config.js
-```
-
 #### webpack.config.js
 
 ```javascript
@@ -1554,8 +1529,18 @@ module.exports = {
 
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i, // 対象とするアセットファイルの拡張子
-        type: 'asset/resource'  // asset/resource を指定して画像をコピーして出力
+        type: "asset/resource"  // asset/resource を指定して画像をコピーして出力
       },
+      // ...
+
+      output: {
+        // 出力ファイルのディレクトリ名
+        path: path.resolve(__dirname, "dist"), // -> パスの設定を変更
+        // Asset Modules の出力先を指定
+        assetModuleFilename: 'assets/img/[name][ext][query]',
+        // 出力ファイル名
+        filename: "assets/js/main.js",
+        // clean: true //ファイルを出力する前にディレクトリをクリーンアップ
 ```
 
 ```javascript
@@ -1669,12 +1654,12 @@ module.exports = {
   // ファイルの出力設定
   output: {
     // 出力ファイルのディレクトリ名
-    path: path.resolve(__dirname, "dist/assets/js"),
-    // Asset Modules の出力先を指定 -> ~/assets/js/~ 以下に出力される
+    path: path.resolve(__dirname, "dist"), // -> パスの設定を変更
+    // Asset Modules の出力先を指定
     assetModuleFilename: 'assets/img/[name][ext][query]',
     // 出力ファイル名
-    filename: "main.js",
-    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
+    filename: "assets/js/main.js",
+    // clean: true //ファイルを出力する前にディレクトリをクリーンアップ
   },
 
   // ローカル開発用環境を立ち上げる
@@ -1688,4 +1673,50 @@ module.exports = {
   },
   
 };
+```
+
+## Plugins
+
+### Install MiniCssExtractPlugin
+CSSを抽出して別ファイルとして出力する
+
+```bash
+$ npm install -D mini-css-extract-plugin
+```
+
+#### package.json
+
+```javascript
+{
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "start:dev": "npx webpack serve --mode development",
+    "watch": "webpack --watch"
+  },
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "postcss": "^8.4.6",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.4.1",
+    "sass": "^1.49.8",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
+```
+
+
+```javascript
+
 ```
