@@ -32,7 +32,7 @@ $ npm ls -depth=1
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
   },
-  "private": true
+  "private": true // プロジェクトを誤って公開しないようにする
 }
 ```
 
