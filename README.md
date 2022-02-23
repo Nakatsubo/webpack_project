@@ -1,6 +1,7 @@
 # Development environment using webpack
 - [最新版で学ぶwebpack 5入門 JavaScriptのモジュールバンドラ](https://ics.media/entry/12140/)
 - [最新版で学ぶwebpack 5入門 Babel 7でES2021環境の構築](https://ics.media/entry/16028/#webpack-babel-esnext)
+- [webpack の基本的な使い方](https://www.webdesignleaves.com/pr/jquery/webpack_basic_01.html)
 
 ## Create Project
 
@@ -84,7 +85,8 @@ $ npm i -D webpack-dev-server
 
 ### webpack.config.js
 ~~下記のコードを記載しないとバンドルされたファイルが出力されない~~
-tmpファイルが毎回生成されてしまうが、解決策がわからないので一旦残す
+~~tmpファイルが毎回生成されてしまうが、解決策がわからないので一旦残す~~
+ファイルを出力するごとにクリーンアップする
 
 ```javascript
 devMiddleware: {
@@ -106,7 +108,8 @@ module.exports = {
     //  出力ファイルのディレクトリ名
     path: `${__dirname}/dist/assets/js/`,
     // 出力ファイル名
-    filename: "main.js"
+    filename: "main.js",
+    clean: true //ファイルを出力する前にディレクトリをクリーンアップ
   },
 
   // ローカル開発用環境を立ち上げる
