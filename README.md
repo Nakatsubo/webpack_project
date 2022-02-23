@@ -1685,6 +1685,38 @@ module.exports = {
 };
 ```
 
+```bash
+.
+├── dist
+│   ├── assets
+│   │   ├── css
+│   │   │   ├── style.css
+│   │   │   └── style.css.map
+│   │   ├── img
+│   │   │   └── sample.jpg
+│   │   └── js
+│   │       ├── main.js
+│   │       └── main.js.map
+│   └── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   └── assets
+│       ├── css
+│       │   └── style.css
+│       ├── img
+│       │   └── sample.jpg
+│       ├── js
+│       │   ├── index.js
+│       │   └── modules
+│       │       ├── bar.js
+│       │       └── foo.js
+│       └── scss
+│           └── style.scss
+└── webpack.config.js
+```
+
 ## Plugins
 
 ### Install MiniCssExtractPlugin
@@ -1935,3 +1967,41 @@ module.exports = {
 ```
 
 ### Install MiniCssExtractPlugin
+production モードでCSSを圧縮する
+
+```bash
+$ npm install -D css-minimizer-webpack-plugin
+```
+
+#### package.json
+
+```javascript
+{
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "start:dev": "npx webpack serve --mode development",
+    "watch": "webpack --watch"
+  },
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "css-minimizer-webpack-plugin": "^3.4.1",
+    "mini-css-extract-plugin": "^2.5.3",
+    "postcss": "^8.4.6",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.4.1",
+    "sass": "^1.49.8",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
+```
