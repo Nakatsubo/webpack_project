@@ -15,6 +15,7 @@
 1. [Asset Modules](https://github.com/NakatsuboYusuke/webpack_project#asset-modules)
 1. [Plugins](https://github.com/NakatsuboYusuke/webpack_project#plugins)
 1. [splitChunks](splitChunks)
+1. [Update Project](https://github.com/NakatsuboYusuke/webpack_project#update-project)
 
 ## Create Project
 
@@ -2659,3 +2660,8 @@ module.exports = {
 │           └── style.scss
 └── webpack.config.js
 ```
+
+## Update Project
+(2022/4/2)ビルド時に CSSディレクトリ, Javascriptディレクトリ以外のファイルがクリーンアップされてしまうのを解消する
+
+

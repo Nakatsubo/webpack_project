@@ -4,6 +4,9 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // CssMinimizerPlugin モジュールの読み込み
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+// CleanWebpackPlugin モジュールの読み込み
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 追加
+
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
@@ -30,6 +33,10 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: "assets/css/style.css",  // 出力先とファイル名を指定
+    }),
+    // ビルド時にクリーンアップするファイルを指定
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*", "!**.html", "!assets/**"], //削除対象外を指定
     }),
   ],
 
